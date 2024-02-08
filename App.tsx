@@ -1,10 +1,9 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { View, Text } from 'react-native';
-import React from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
 
-const RootLayoutNav = () => {
-  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+export default function App() {
+	const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
@@ -18,4 +17,11 @@ const RootLayoutNav = () => {
 	);
 };
 
-export default RootLayoutNav;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
