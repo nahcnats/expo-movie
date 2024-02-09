@@ -15,6 +15,7 @@ import RootNavigation from './src/navigators/RootNavigation';
 
 export default function App() {
 	const apiUrl = process.env.EXPO_PUBLIC_TMDB_API_URL;
+	// https://api.themoviedb.org/3/movie/550?api_key=b9b6ad5fc69b3470854e6afcd6cf5032
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>

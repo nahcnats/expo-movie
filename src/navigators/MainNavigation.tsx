@@ -4,37 +4,16 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-na
 import colors from 'tailwindcss/colors';
 import { useNavigation } from "@react-navigation/native";
 
-import BottomNavigation from './BottomNavigation';
-// import {
-//     MerchantProfileScreen
-// } from '../screens/merchant'
-// import {
-//     MTTransactionsScreen
-// } from '../screens/mt/tabs'
-// import { ScanScreen } from '../screens';
-// import {
-//     PayformScreen,
-//     PayVerifyScreen,
-//     ForgotPINScreen,
-//     PINOTPScreen,
-//     RegisterPINScreen,
-//     PaySuccessScreen
-// } from '../screens/pay';
-// import {
-//     VouchersScreen,
-//     PaymentsScreen,
-//     RewardsScreen
-// } from '../screens/history/tabs';
-// import {
-//     VoucherPurchaseScreen,
-//     VoucherPaymentLoadingScreen,
-//     VoucherPurchaseSuccessScreen
-// } from '../screens/voucher';
 // import { BackHeader } from '../components/common';
+import BottomNavigation from './BottomNavigation';
+import MovieDetailScreen from '../screens/MovieDetails';
+import MovieReviewListingScreen from '../screens/MovieReviewListingScreen';
 
 export type MainNavigationParams = {
     Dashboard: undefined,
     BottomTab: undefined | { screen?: string },
+    MovieDetail: undefined,
+    ReviewListing: undefined
 }
 
 const Stack = createNativeStackNavigator<MainNavigationParams>();
@@ -62,6 +41,21 @@ const MainNavigation = () => {
                     headerShown: false
                 }}
             />
+            <Stack.Group
+                key='SubScreens'
+                screenOptions={{
+                    headerShown: true
+                }}
+            >
+                <Stack.Screen
+                    name='MovieDetail'
+                    component={MovieDetailScreen}
+                />
+                <Stack.Screen
+                    name='ReviewListing'
+                    component={MovieReviewListingScreen}
+                />
+            </Stack.Group>
         </Stack.Navigator>
     );
 }

@@ -3,12 +3,12 @@ import React from 'react';
 
 import colors from 'tailwindcss/colors';
 
-const DashboardScreen = () => {
+const HomeScreen = () => {
     return (
         <View className='flex-1 justify-center items-center'>
-            <Text>Dashboard</Text>
+            <Text>Home</Text>
         </View>
     );
 };
 
-export default DashboardScreen;
+export default HomeScreen;

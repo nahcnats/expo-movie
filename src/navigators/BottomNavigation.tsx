@@ -6,32 +6,25 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import colors from 'tailwindcss/colors';
 
 import { IS_ANDROID } from '../utils';
-// import {
-//     HomeScreen,
-//     MTScreen,
-//     ScanScreen,
-//     HistoryScreen,
-//     ProfileScreen
-// } from '../screens';
 import { MainNavigationParams } from './MainNavigation';
-import DashboardScreen from '../screens/DashboardScreen';
-import AuthScreen from '../screens/AuthScreen';
+import HomeScreen from '../screens/HomeScreen';
+import WatctListScreen from '../screens/WatctListScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 type BottomTabNavigationParams = {
-    Dashboard: undefined,
+    Home: undefined,
+    WatchList: undefined,
+    Profile: undefined
 }
 
 const BottomTab = createBottomTabNavigator<BottomTabNavigationParams>();
-const iconSize = 24;
-const iconActive = colors.green[700];
-const iconInactive = colors.gray[300];
 
 const BottomNavigation = () => {
     const navigation = useNavigation<NativeStackNavigationProp<MainNavigationParams>>();
 
     return (
         <BottomTab.Navigator
-            initialRouteName='Dashboard'
+            initialRouteName='Home'
             backBehavior='history'
             screenOptions={{
                 tabBarShowLabel: true,
@@ -50,8 +43,16 @@ const BottomNavigation = () => {
             }}
         >
             <BottomTab.Screen
-                name="Dashboard"
-                component={DashboardScreen}
+                name="Home"
+                component={HomeScreen}
+            />
+            <BottomTab.Screen
+                name="WatchList"
+                component={WatctListScreen}
+            />
+            <BottomTab.Screen
+                name="Profile"
+                component={ProfileScreen}
             />
         </BottomTab.Navigator>
     );
