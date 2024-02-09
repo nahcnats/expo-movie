@@ -14,7 +14,7 @@ import { queryClient, IS_ANDROID } from './src/utils';
 import RootNavigation from './src/navigators/RootNavigation';
 
 export default function App() {
-	const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+	const apiUrl = process.env.EXPO_PUBLIC_TMDB_API_URL;
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
@@ -33,12 +33,3 @@ export default function App() {
 		</GestureHandlerRootView>
 	);
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
