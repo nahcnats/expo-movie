@@ -11,6 +11,7 @@ import { BottomSheetBackdrop, BottomSheetBackdropProps, BottomSheetModal, Bottom
 import { logIn, logOut } from "../store/features/auth-slice"
 import { useAppSelector } from "../store/store";
 import AuthNavigation from "./AuthNavigation";
+import MainNavigation from "./MainNavigation";
 
 const MyTheme = {
     ...DefaultTheme,
@@ -58,7 +59,8 @@ const RootNavigation = () => {
             theme={MyTheme}
         >
             <BottomSheetModalProvider>
-                <AuthNavigation />
+                {/* <AuthNavigation /> */}
+                <MainNavigation />
                 {/* {
                     isAuth
                         ? <MainNavigation />
