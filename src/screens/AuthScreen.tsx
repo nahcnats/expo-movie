@@ -13,7 +13,11 @@ import { ALERT_TYPE, Toast, Dialog } from 'react-native-alert-notification';
 
 import { AppDispatch, useAppSelector } from '../store/store';
 import { IS_ANDROID, dismissKeyboard } from '../utils';
-import { getRequestToken, loginWithPassword } from '../services/auth-services';
+import { 
+    getRequestToken, 
+    loginWithPassword, 
+    loginWithPasswordProps 
+} from '../services/auth-services';
 
 import CustomTextInput from '../components/CustomTextInput';
 import { logIn } from '../store/features/auth-slice';
@@ -67,11 +71,9 @@ const AuthScreen = () => {
                 username: data.username,
                 password: data.password,
                 request_token: requestTokenRes.request_token
-            }
+            } as loginWithPasswordProps;
 
             const logInRes = await loginWithPassword(payload);
-
-            console.log(logInRes)
 
             if (logInRes?.success !== true) {
                 throw new Error(logInRes.status_message);

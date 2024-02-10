@@ -1,15 +1,15 @@
 import { server, apiErrorHandler } from "../utils";
 
-import { CreateRequestToken } from "../models/CreateRequestToken";
+import { RequestToken } from "../models/RequestToken";
 import { LoginWithPassword } from "../models/LoginWithPassword";
 
-interface loginWithPasswordProps {
+export interface loginWithPasswordProps {
     username: string,
     password: string,
     request_token: string
 }
 
-export const getRequestToken = async (): Promise<CreateRequestToken> => {
+export const getRequestToken = async (): Promise<RequestToken> => {
     try {
         const headerOptions = {
             'Authorization': `Bearer ${process.env.EXPO_PUBLIC_TMDB_TOKEN}`,
