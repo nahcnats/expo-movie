@@ -5,11 +5,10 @@ import { IS_ANDROID } from '../utils';
 
 interface CustomTextInputProp extends TextInputProps {
     label: string,
-    children?: React.ReactNode,
     errorMessage?: string,
 }
 
-const CustomTextInput = ({ label, children, errorMessage, ...textInputProps }: CustomTextInputProp) => {
+const CustomTextInput = ({ label, errorMessage, ...textInputProps }: CustomTextInputProp) => {
     return (
         <View className='gap-y-6'>
             <Text className='text-sm font-semibold'>{label}</Text>
@@ -20,7 +19,6 @@ const CustomTextInput = ({ label, children, errorMessage, ...textInputProps }: C
                     autoCapitalize="none"
                     {...textInputProps}
                 />
-                {children}
             </View>
             
             {!!errorMessage && (

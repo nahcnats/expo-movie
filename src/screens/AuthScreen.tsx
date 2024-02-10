@@ -1,5 +1,5 @@
 import { View, Text, Pressable, KeyboardAvoidingView } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -13,8 +13,10 @@ import { ALERT_TYPE, Toast, Dialog } from 'react-native-alert-notification';
 
 import { AppDispatch, useAppSelector } from '../store/store';
 import { IS_ANDROID, dismissKeyboard } from '../utils';
+import { getRequestToken, loginWithPassword } from '../services/auth-services';
 
 import CustomTextInput from '../components/CustomTextInput';
+import { logIn } from '../store/features/auth-slice';
 
 const signInFormSchema = z.object({
     username: z
@@ -35,6 +37,7 @@ type TSignInFormSchema = z.infer<typeof signInFormSchema>;
 
 const AuthScreen = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const [isLoading, setIsLoading] = useState(false);
 
     const methods = useForm<TSignInFormSchema>({
         resolver: zodResolver(signInFormSchema),
@@ -44,8 +47,47 @@ const AuthScreen = () => {
         }
     });
 
-    const onSubmit: SubmitHandler<TSignInFormSchema> = async (data) => {
+    const getNewRequestToken = async () => {
+        try {
+            return await getRequestToken();
+        } catch (err: any) {
+            throw err;
+        }
+    }
 
+    const onSubmit: SubmitHandler<TSignInFormSchema> = async (data) => {
+        try {
+            setIsLoading(true);
+
+            const requestTokenRes = await getNewRequestToken();
+
+            if (!requestTokenRes) return;
+
+            const payload = {
+                username: data.username,
+                password: data.password,
+                request_token: requestTokenRes.request_token
+            }
+
+            const logInRes = await loginWithPassword(payload);
+
+            console.log(logInRes)
+
+            if (logInRes?.success !== true) {
+                throw new Error(logInRes.status_message);
+            };
+
+            dispatch(logIn(payload));
+        } catch (err: any) {
+            Toast.show({
+                type: ALERT_TYPE.DANGER,
+                title: 'Error',
+                textBody: err.message,
+                autoClose: 2000,
+            });
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -70,7 +112,7 @@ const AuthScreen = () => {
                             <CustomTextInput
                                 label='Username'
                                 value={value}
-                                onChange={onChange}
+                                onChangeText={onChange}
                                 onBlur={onBlur}
                                 errorMessage={error?.message}
                                 autoFocus={true}
@@ -90,7 +132,7 @@ const AuthScreen = () => {
                             <CustomTextInput
                                 label='Password'
                                 value={value}
-                                onChange={onChange}
+                                onChangeText={onChange}
                                 onBlur={onBlur}
                                 errorMessage={error?.message}
                                 secureTextEntry={true}
@@ -100,7 +142,8 @@ const AuthScreen = () => {
                 />
                 <Pressable
                     className='bg-primary self-center p-4 w-32 mt-16 rounded-lg'
-                    onPress={() => methods.handleSubmit(onSubmit)}
+                    onPress={methods.handleSubmit(onSubmit)}
+                    disabled={isLoading}
                 >
                     <Text className='text-sm text-white font-semibold self-center'>Sign In</Text>
                 </Pressable>

@@ -1,8 +1,13 @@
 import { Platform, Keyboard } from "react-native";
 import { QueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 export const queryClient = new QueryClient();
 export const IS_ANDROID = Platform.OS === 'android';
+
+export const server = axios.create({
+    baseURL: process.env.EXPO_PUBLIC_TMDB_BASE_URL,
+});
 
 export const dismissKeyboard = () => {
     Keyboard.dismiss();
