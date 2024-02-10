@@ -4,15 +4,19 @@ import { useDispatch } from 'react-redux';
 
 import { AppDispatch } from '../store/store';
 import { logOut} from '../store/features/auth-slice';
+import TabHeader from '../components/TabHeader';
 
 const ProfileScreen = () => {
     const dispatch = useDispatch<AppDispatch>();
     
     return (
-        <View className='flex-1 justify-center items-center'>
-            <Text onPress={() => {
-                dispatch(logOut())
-            }}>ProfileScreen</Text>
+        <View>
+            <TabHeader initialLetter='My' title=' Profile' />
+            <View className='flex-1 justify-center items-center'>
+                <Text onPress={() => {
+                    dispatch(logOut())
+                }}>ProfileScreen</Text>
+            </View>
         </View>
     );
 };

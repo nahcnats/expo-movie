@@ -101,7 +101,7 @@ const AuthScreen = () => {
         >
             <View className='flex-1 justify-center p-4'>
                 <View className='mb-12 justify-center items-center'>
-                    <Text className='text-lg text-secondary font-bold'>Movie App</Text>
+                    <Text className='text-lg text-secondary font-bold'><Text className='text-lg text-tertiary'>M</Text>ovie App</Text>
                 </View>
                 <Controller
                     control={methods.control}
@@ -147,7 +147,7 @@ const AuthScreen = () => {
                     onPress={methods.handleSubmit(onSubmit)}
                     disabled={isLoading}
                 >
-                    <Text className='text-sm text-white font-semibold self-center'>Sign In</Text>
+                    <Text className='text-sm text-tertiary font-semibold self-center'>Sign In</Text>
                 </Pressable>
             </View>
         </KeyboardAvoidingView>

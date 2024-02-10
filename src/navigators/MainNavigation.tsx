@@ -4,7 +4,7 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-na
 import colors from 'tailwindcss/colors';
 import { useNavigation } from "@react-navigation/native";
 
-// import { BackHeader } from '../components/common';
+import BackHeader from '../components/BackHeader';
 import BottomNavigation from './BottomNavigation';
 import MovieDetailScreen from '../screens/MovieDetails';
 import MovieReviewListingScreen from '../screens/MovieReviewListingScreen';
@@ -12,7 +12,7 @@ import MovieReviewListingScreen from '../screens/MovieReviewListingScreen';
 export type MainNavigationParams = {
     Dashboard: undefined,
     BottomTab: undefined | { screen?: string },
-    MovieDetail: undefined,
+    MovieDetails: { movieId: number},
     ReviewListing: undefined
 }
 
@@ -44,11 +44,16 @@ const MainNavigation = () => {
             <Stack.Group
                 key='SubScreens'
                 screenOptions={{
-                    headerShown: true
+                headerStyle:{
+                        backgroundColor: 'black',
+                },
+                headerTitle: "",
+                headerLeft: () => <BackHeader />,
+                headerBackTitleVisible: false,
                 }}
             >
                 <Stack.Screen
-                    name='MovieDetail'
+                    name='MovieDetails'
                     component={MovieDetailScreen}
                 />
                 <Stack.Screen

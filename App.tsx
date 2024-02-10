@@ -24,7 +24,7 @@ export default function App() {
 					<QueryClientProvider client={queryClient}>
 						<SafeAreaProvider>
 							<AlertNotificationRoot toastConfig={{ titleStyle: { color: 'red' } }}>
-								<StatusBar style="auto" />
+								<StatusBar style='light' />
 								<RootNavigation />
 							</AlertNotificationRoot>
 						</SafeAreaProvider>
