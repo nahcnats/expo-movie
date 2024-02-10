@@ -1,19 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text } from 'react-native';
 
+import AuthScreen from '../screens/AuthScreen';
+
 export type AuthNavigationParams = {
-    Login: undefined,
+    Auth: undefined,
 }
 
 const Stack = createNativeStackNavigator<AuthNavigationParams>();
-
-function LoginScreen() {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen</Text>
-        </View>
-    );
-}
 
 export default function () {
     const defaultNavOptions = {
@@ -25,12 +19,12 @@ export default function () {
 
     return (
         <Stack.Navigator
-            initialRouteName='Login'
+            initialRouteName='Auth'
             screenOptions={defaultNavOptions}
         >
             <Stack.Screen
-                name='Login'
-                component={LoginScreen}
+                name='Auth'
+                component={AuthScreen}
                 options={{
                     headerShown: false
                 }}

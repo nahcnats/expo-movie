@@ -11,11 +11,11 @@ interface CustomTextInputProp extends TextInputProps {
 
 const CustomTextInput = ({ label, children, errorMessage, ...textInputProps }: CustomTextInputProp) => {
     return (
-        <View>
-            <Text>{label}</Text>
-            <View>
+        <View className='gap-y-6'>
+            <Text className='text-sm font-semibold'>{label}</Text>
+            <View className='flex-row flex-1 justify-between items-center'>
                 <RNTextInput
-                    className={`flex-1 ${IS_ANDROID ? 'py-[2] px-[6]' : 'p-[6]'}`}
+                    className={`flex-1 border border-primary h-10 rounded-lg ${IS_ANDROID ? 'py-[2] px-[6]' : 'p-[6]'}`}
                     autoCorrect={false}
                     autoCapitalize="none"
                     {...textInputProps}

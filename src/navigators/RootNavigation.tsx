@@ -59,13 +59,11 @@ const RootNavigation = () => {
             theme={MyTheme}
         >
             <BottomSheetModalProvider>
-                {/* <AuthNavigation /> */}
-                <MainNavigation />
-                {/* {
+                {
                     isAuth
                         ? <MainNavigation />
                         : <AuthNavigation />
-                } */}
+                }
             </BottomSheetModalProvider>
         </NavigationContainer>
     );
