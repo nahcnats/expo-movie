@@ -73,6 +73,7 @@ const MovieDetailScreen = ({ route }: Props) => {
 	const { mutateAsync: addWatchlist } = useAddWatchlist();
 
 	useEffect(() => {
+		// TODO: Not the best way to filter data. API should handle this
 		const watchlistMovie = watchlist?.results.filter(item => item.id === movieId);
 
 		if (watchlistMovie?.length) {

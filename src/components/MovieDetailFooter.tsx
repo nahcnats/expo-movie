@@ -55,6 +55,7 @@ const MovieDetailsFooter = ({ movieId }: MovieDetailsFooterProps) => {
     const { mutateAsync: deleteRating } = useRemoveRating();
 
     useEffect(() => {
+        // TODO: Not the best way to filter data. API should handle this
         const ratedMovie = ratings?.results.filter(item => item.id === movieId);
 
         if (ratedMovie?.length) {

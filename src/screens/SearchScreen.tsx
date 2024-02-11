@@ -76,6 +76,7 @@ const SearchScreen = () => {
                     <AntDesign name="closecircleo" size={24} color="lightgray" />
                 </TouchableOpacity>
             </View>
+            {/* TODO: Should use flatlist to display large set of data.  */}
             {
                 isLoading ? <Loading /> : <ScrollView
                     showsVerticalScrollIndicator={false}
