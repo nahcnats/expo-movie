@@ -10,10 +10,10 @@ const ProfileScreen = () => {
     const dispatch = useDispatch<AppDispatch>();
     
     return (
-        <View>
+        <View className='flex-1'>
             <TabHeader initialLetter='My' title=' Profile' />
             <View className='flex-1 justify-center items-center'>
-                <Text onPress={() => {
+                <Text className='text-white' onPress={() => {
                     dispatch(logOut())
                 }}>ProfileScreen</Text>
             </View>

@@ -1,0 +1,12 @@
+import { useQuery } from '@tanstack/react-query';
+
+import { getMovieRatingsProp } from "../services/movies-services";
+import { WatchList } from '../models/WatchList';
+import { getWatchlist } from '../services/profile-services';
+
+export const useWatchlist = (account_id: getMovieRatingsProp) => {
+    return useQuery<WatchList, Error>({
+        queryKey: ['watchlist', account_id],
+        queryFn: () => getWatchlist(account_id)
+    });
+};

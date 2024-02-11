@@ -143,11 +143,11 @@ const AuthScreen = () => {
                     }}
                 />
                 <Pressable
-                    className='bg-primary self-center p-4 w-32 mt-16 rounded-lg'
+                    className='bg-tertiary self-center p-4 w-32 mt-16 rounded-lg'
                     onPress={methods.handleSubmit(onSubmit)}
                     disabled={isLoading}
                 >
-                    <Text className='text-sm text-tertiary font-semibold self-center'>Sign In</Text>
+                    <Text className='text-sm text-black font-semibold self-center'>Sign In</Text>
                 </Pressable>
             </View>
         </KeyboardAvoidingView>

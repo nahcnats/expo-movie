@@ -1,6 +1,8 @@
 import { server, apiErrorHandler } from "../utils";
 import { headerOptions } from "../constants";
 import { Profile } from "../models/Profile";
+import { getMovieRatingsProp } from "./movies-services";
+import { WatchList } from "../models/WatchList";
 
 export interface getProfileProps {
     session_id: string
@@ -8,7 +10,7 @@ export interface getProfileProps {
 
 export const getProfile = async (payload: getProfileProps): Promise<Profile> => {
     try {
-        const res = await server.post(`/account/${payload.session_id}`, {
+        const res = await server.get(`/account/${payload.session_id}`, {
             headers: headerOptions
         });
 
@@ -18,8 +20,16 @@ export const getProfile = async (payload: getProfileProps): Promise<Profile> => 
     }
 }
 
-// Add To Watchlist (POST)
-// https://api.themoviedb.org/3/account/{account_id}/watchlist
-
 // Watchlist Movies (GET)
 // https://api.themoviedb.org/3/account/{account_id}/watchlist/movies
+export const getWatchlist = async (payload: getMovieRatingsProp): Promise<WatchList> => {
+    try {
+        const res = await server.get(`/account/${payload.account_id}/watchlist/movies`, {
+            headers: headerOptions
+        });
+
+        return res.data;
+    } catch (err: any) {
+        throw new Error(`${apiErrorHandler(err)}`);
+    }
+}

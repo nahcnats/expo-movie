@@ -4,9 +4,18 @@ import { headerOptions } from "../constants";
 import { TrendingMovie } from "../models/TrendingMovie";
 import { Movie } from "../models/Movie";
 import { Reviews } from "../models/Reviews";
+import { RatedMovies } from "../models/RatedMovies";
 
 export interface getMovieProp {
     movieId: number
+}
+
+export interface getMovieRatingsProp {
+    account_id: number
+}
+
+export interface addWatchlistProp extends getMovieRatingsProp {
+    media_id: number,
 }
 
 export const getTrendingMovies = async (): Promise<TrendingMovie[]> => {
@@ -50,6 +59,62 @@ export const getMovieReviews = async (payload: getMovieProp): Promise<Reviews> =
 
 // Add Rating (POST)
 // https://api.themoviedb.org/3/movie/{movie_id}/rating
+export const addMovieRating = async (payload: getMovieProp): Promise<boolean> => {
+    try {
+        const res = await server.post(`/movie/${payload.movieId}rating`, {
+            headers: headerOptions
+        });
+
+        return res.data.success;
+    } catch (err: any) {
+        throw new Error(`${apiErrorHandler(err)}`);
+    }
+}
 
 // Delete Rating (DELETE)
 // https://api.themoviedb.org/3/movie/{movie_id}/rating
+export const removeMovieRating = async (payload: getMovieProp): Promise<boolean> => {
+    try {
+        const res = await server.delete(`/movie/${payload.movieId}/rating`, {
+            headers: headerOptions
+        });
+
+        return res.data.success;
+    } catch (err: any) {
+        throw new Error(`${apiErrorHandler(err)}`);
+    }
+}
+
+// Rated Movies (GET)
+// https://api.themoviedb.org/3/account/{account_id}/rated/movies
+export const getMovieRatings = async (payload: getMovieRatingsProp): Promise<RatedMovies> => {
+    try {
+        const res = await server.get(`/account/${payload.account_id}/rated/movies`, {
+            headers: headerOptions
+        });
+
+        return res.data;
+    } catch (err: any) {
+        throw new Error(`${apiErrorHandler(err)}`);
+    }
+}
+
+// Add To Watchlist (POST)
+// https://api.themoviedb.org/3/account/{account_id}/watchlist
+export const addWatchlist = async (payload: addWatchlistProp): Promise<boolean> => {
+    try {
+        const res = await server.post(`/account/${payload.account_id}/watchlist`, 
+        {
+            media_type: 'movie',
+            media_id: payload.media_id,
+            watchlist: true  
+        },
+        {
+            headers: headerOptions
+        });
+
+        return res.data;
+    } catch (err: any) {
+        throw new Error(`${apiErrorHandler(err)}`);
+    }
+}

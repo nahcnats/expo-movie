@@ -6,13 +6,14 @@ import {
 	TouchableOpacity,
 	Dimensions
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { Ionicons, Fontisto } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from 'tailwindcss/colors';
+import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
 
 import { IS_ANDROID } from '../utils';
 
@@ -23,6 +24,8 @@ import { useProfile } from '../hooks/useProfile';
 import { useAppSelector } from '../store/store';
 import { useReviews } from '../hooks/useReviews';
 import MovieDetailsFooter from '../components/MovieDetailFooter';
+import { useAddWatchlist } from '../hooks/useAddWatchList';
+import { useWatchlist } from '../hooks/useWatchlist';
 
 const { width, height } = Dimensions.get('window');
 const topMargin = IS_ANDROID ? 'mt-3' : ''
@@ -44,22 +47,60 @@ const MovieDetailScreen = ({ route }: Props) => {
 		refetch
 	} = useMovie({ movieId: movieId });
 
-	// const {
-	// 	isLoading: isProfileLoading,
-	// 	isSuccess: isProfileSuccess,
-	// 	isError: isProfileError,
-	// 	data: profile,
-	// 	error: profileError,
-	// 	refetch: profileRefetch
-	// } = useProfile({ session_id: request_token });
+	const {
+		isLoading: isProfileLoading,
+		isSuccess: isProfileSuccess,
+		isError: isProfileError,
+		data: profile,
+		error: profileError,
+		refetch: profileRefetch
+	} = useProfile({ session_id: request_token });
+
+	const {
+		isLoading: isWatchlistLoading,
+		isSuccess: isWatchlistSuccess,
+		isError: isWatchlistError,
+		data: watchlist,
+		error: watchlistError,
+		refetch: watchlistRefetch
+	} = useWatchlist({ account_id: profile?.id || 0 })
 
 	useRefreshOnFocus(refetch);
+	useRefreshOnFocus(profileRefetch);
 
-	if (isLoading && !data) {
+	const { mutateAsync: addWatchlist } = useAddWatchlist();
+
+	useEffect(() => {
+		const watchlistMovie = watchlist?.results.filter(item => item.id === movieId);
+
+		if (watchlistMovie?.length) {
+			setIsWatchList(true);
+		}
+	}, [isWatchlistSuccess]);
+
+	const addMovieWatchlists = async () => {
+		try {
+			await addWatchlist({
+				media_id: movieId,
+				account_id: profile?.id || 0
+			});
+
+			setIsWatchList(true);
+		} catch (err: any) {
+			Toast.show({
+				type: ALERT_TYPE.DANGER,
+				title: 'Error',
+				textBody: err.message,
+				autoClose: 2000,
+			});
+		}
+	}
+
+	if ((isLoading || isProfileLoading || isWatchlistLoading) && (!data || !profile || !watchlist)) {
 		return null;
 	}
 
-	if (isError) {
+	if (isError || isProfileError || isWatchlistError) {
 		return null;
 	}
 
@@ -70,12 +111,14 @@ const MovieDetailScreen = ({ route }: Props) => {
 			<View className='w-full'>
 				<SafeAreaView className={`absolute z-20 w-full flex-row justify-between item-center px-4 ${topMargin}`}>
 					<TouchableOpacity
+						className='mx-2'
 						onPress={() => navigation.goBack()}
 					>
 						<Ionicons name="chevron-back-circle" size={34} color='#01b4e4' />	
 					</TouchableOpacity>
 					<TouchableOpacity
-						onPress={() => setIsWatchList(v => !v)}
+						className='mx-2'
+						onPress={addMovieWatchlists}
 					>
 						<Fontisto name='favorite' size={30} color={isWatchList ? colors.yellow[500] : colors.white} />
 					</TouchableOpacity>
