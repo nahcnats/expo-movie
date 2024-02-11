@@ -12,13 +12,15 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import { Ionicons, Fontisto } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import colors from 'tailwindcss/colors';
 
 import { IS_ANDROID } from '../utils';
 
 import { MainNavigationParams } from '../navigators/MainNavigation';
 import { useMovie } from '../hooks/useMovie';
-import colors from 'tailwindcss/colors';
 import { useRefreshOnFocus } from '../hooks/useFreshOnFocus';
+import { useProfile } from '../hooks/useProfile';
+import { useAppSelector } from '../store/store';
 
 const { width, height } = Dimensions.get('window');
 const topMargin = IS_ANDROID ? 'mt-3' : ''
@@ -26,9 +28,11 @@ const topMargin = IS_ANDROID ? 'mt-3' : ''
 type Props = NativeStackScreenProps<MainNavigationParams, 'MovieDetails'>;
 
 const MovieDetailScreen = ({ route }: Props) => {
+	const { request_token } = useAppSelector(state => state.authReducer.value);
 	const navigation = useNavigation<NativeStackNavigationProp<MainNavigationParams>>();
 	const { movieId } = route.params;
 	const [isWatchList, setIsWatchList] = useState(false);
+
 	const {
 		isLoading,
 		isSuccess,
@@ -37,13 +41,24 @@ const MovieDetailScreen = ({ route }: Props) => {
 		error,
 		refetch
 	} = useMovie({ movieId: movieId });
-	useRefreshOnFocus(refetch);
 
-	if (isLoading && !data) {
+	const {
+		isLoading: isProfileLoading,
+		isSuccess: isProfileSuccess,
+		isError: isProfileError,
+		data: profile,
+		error: profileError,
+		refetch: profileRefetch
+	} = useProfile({ session_id: request_token });
+
+	useRefreshOnFocus(refetch);
+	useRefreshOnFocus(profileRefetch);
+
+	if ((isLoading && isProfileLoading) && (!data && !profile)) {
 		return null;
 	}
 
-	if (isError) {
+	if (isError || isProfileError) {
 		return null;
 	}
 
