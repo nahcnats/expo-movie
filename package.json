@@ -21,8 +21,11 @@
     "axios": "^1.6.7",
     "expo": "~50.0.6",
     "expo-constants": "~15.4.5",
+    "expo-image": "~1.10.6",
+    "expo-linear-gradient": "~12.7.1",
     "expo-linking": "~6.2.2",
     "expo-status-bar": "~1.11.1",
+    "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
@@ -39,12 +42,11 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
-    "zod": "^3.22.4",
-    "expo-image": "~1.10.6",
-    "expo-linear-gradient": "~12.7.1"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/lodash": "^4.14.202",
     "@types/react": "~18.2.45",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.1.3"

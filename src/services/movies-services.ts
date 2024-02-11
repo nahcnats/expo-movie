@@ -20,7 +20,8 @@ export interface addWatchlistProp extends getMovieRatingsProp {
 }
 
 export interface searchMoviesProp {
-    query: string
+    query: string,
+    page: number
 }
 
 export const getTrendingMovies = async (): Promise<TrendingMovie[]> => {
