@@ -21,6 +21,8 @@ import { useMovie } from '../hooks/useMovie';
 import { useRefreshOnFocus } from '../hooks/useFreshOnFocus';
 import { useProfile } from '../hooks/useProfile';
 import { useAppSelector } from '../store/store';
+import { useReviews } from '../hooks/useReviews';
+import MovieDetailsFooter from '../components/MovieDetailFooter';
 
 const { width, height } = Dimensions.get('window');
 const topMargin = IS_ANDROID ? 'mt-3' : ''
@@ -42,23 +44,22 @@ const MovieDetailScreen = ({ route }: Props) => {
 		refetch
 	} = useMovie({ movieId: movieId });
 
-	const {
-		isLoading: isProfileLoading,
-		isSuccess: isProfileSuccess,
-		isError: isProfileError,
-		data: profile,
-		error: profileError,
-		refetch: profileRefetch
-	} = useProfile({ session_id: request_token });
+	// const {
+	// 	isLoading: isProfileLoading,
+	// 	isSuccess: isProfileSuccess,
+	// 	isError: isProfileError,
+	// 	data: profile,
+	// 	error: profileError,
+	// 	refetch: profileRefetch
+	// } = useProfile({ session_id: request_token });
 
 	useRefreshOnFocus(refetch);
-	useRefreshOnFocus(profileRefetch);
 
-	if ((isLoading && isProfileLoading) && (!data && !profile)) {
+	if (isLoading && !data) {
 		return null;
 	}
 
-	if (isError || isProfileError) {
+	if (isError) {
 		return null;
 	}
 
@@ -126,6 +127,7 @@ const MovieDetailScreen = ({ route }: Props) => {
 				>
 					{data?.overview}
 				</Text>
+				<MovieDetailsFooter movieId={movieId} />
 				{/* Show Movie Reviews
 				Post Rating
 				Delete Rating

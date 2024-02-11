@@ -17,3 +17,9 @@ export const getProfile = async (payload: getProfileProps): Promise<Profile> => 
         throw new Error(`${apiErrorHandler(err)}`);
     }
 }
+
+// Add To Watchlist (POST)
+// https://api.themoviedb.org/3/account/{account_id}/watchlist
+
+// Watchlist Movies (GET)
+// https://api.themoviedb.org/3/account/{account_id}/watchlist/movies
