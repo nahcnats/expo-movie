@@ -1,4 +1,4 @@
-type Results = {
+type results = {
     author: string,
     author_details: {
         name: string,
@@ -15,7 +15,7 @@ type Results = {
 export type Reviews = {
     id: number,
     page: number,
-    results: Results[],
+    results: results[],
     total_pages: number,
     total_results: number
 }

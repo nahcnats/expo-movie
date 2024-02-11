@@ -12,10 +12,11 @@ type results = {
     title: string,
     video: boolean,
     vote_average: number,
-    vote_count: number
+    vote_count: number,
+    rating: number
 }
 
-export type WatchList = {
+export type RatedMovies = {
     page: number,
     results: results[],
     total_pages: number,
