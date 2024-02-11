@@ -11,6 +11,8 @@ import { useTrendingMovies } from '../hooks/useTrendingMovies';
 import { TrendingMovie } from '../models/TrendingMovie';
 
 import { MainNavigationParams } from '../navigators/MainNavigation';
+import Loading from './Loading';
+import Error from './Error';
 
 interface MovieCardProps {
     item: TrendingMovie
@@ -60,16 +62,16 @@ const TrendingMovies = () => {
     }
 
     if (isLoading && !data) {
-        return null;
+        return <Loading />;
     }
 
     if (isError) {
-        return null;
+        return <Error />;
     }
 
     return (
         <View className='mb-8 mx-2'>
-            <Text className='text-lg text-white mb-5'>Trending</Text>
+            <Text className='text-lg text-white font-semibold mb-5'>Trending</Text>
             <Carousel
                 {...baseOptions}
                 ref={ref}

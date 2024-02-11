@@ -10,6 +10,8 @@ import { useProfile } from '../hooks/useProfile';
 import { useRatings } from '../hooks/useRatings';
 import { useRemoveRating } from '../hooks/useRemoveRating';
 import colors from 'tailwindcss/colors';
+import Error from './Error';
+import Loading from './Loading';
 
 interface MovieDetailsFooterProps {
     movieId: number
@@ -78,15 +80,15 @@ const MovieDetailsFooter = ({ movieId }: MovieDetailsFooterProps) => {
     }
 
     if ((isLoading || isProfileLoading || isRatingLoading) && (!data || !profile || !ratings)) {
-        return null;
+        return <Loading />;
     }
 
     if (isError || isProfileError || isRatingError) {
-        return null;
+        return <Error />;
     }
     
     return (
-        <View className='flex-row justify-around items-center mt-12 mx-4'>
+        <View className='flex-row justify-around items-center mt-12 mb-12 mx-4'>
             <TouchableOpacity
                 className='items-center'
             >

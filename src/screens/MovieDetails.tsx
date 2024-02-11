@@ -26,6 +26,8 @@ import { useReviews } from '../hooks/useReviews';
 import MovieDetailsFooter from '../components/MovieDetailFooter';
 import { useAddWatchlist } from '../hooks/useAddWatchList';
 import { useWatchlist } from '../hooks/useWatchlist';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 
 const { width, height } = Dimensions.get('window');
 const topMargin = IS_ANDROID ? 'mt-3' : ''
@@ -97,11 +99,11 @@ const MovieDetailScreen = ({ route }: Props) => {
 	}
 
 	if ((isLoading || isProfileLoading || isWatchlistLoading) && (!data || !profile || !watchlist)) {
-		return null;
+		return <Loading />
 	}
 
 	if (isError || isProfileError || isWatchlistError) {
-		return null;
+		return <Error />
 	}
 
 	return (
@@ -120,7 +122,7 @@ const MovieDetailScreen = ({ route }: Props) => {
 						className='mx-2'
 						onPress={addMovieWatchlists}
 					>
-						<Fontisto name='favorite' size={30} color={isWatchList ? colors.yellow[500] : colors.white} />
+						<Fontisto name='favorite' size={26} color={isWatchList ? colors.yellow[500] : colors.white} />
 					</TouchableOpacity>
 				</SafeAreaView>
 				<View>

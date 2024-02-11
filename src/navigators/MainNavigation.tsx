@@ -8,12 +8,14 @@ import BackHeader from '../components/BackHeader';
 import BottomNavigation from './BottomNavigation';
 import MovieDetailScreen from '../screens/MovieDetails';
 import MovieReviewListingScreen from '../screens/MovieReviewListingScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 export type MainNavigationParams = {
     Dashboard: undefined,
     BottomTab: undefined | { screen?: string },
     MovieDetails: { movieId: number},
-    ReviewListing: undefined
+    ReviewListing: undefined,
+    Search: undefined
 }
 
 const Stack = createNativeStackNavigator<MainNavigationParams>();
@@ -60,6 +62,10 @@ const MainNavigation = () => {
                 <Stack.Screen
                     name='ReviewListing'
                     component={MovieReviewListingScreen}
+                />
+                <Stack.Screen
+                    name='Search'
+                    component={SearchScreen}
                 />
             </Stack.Group>
         </Stack.Navigator>

@@ -8,9 +8,7 @@ interface TabHeaderProps {
 
 const TabHeader = ({ title, initialLetter }: TabHeaderProps) => {
     return (
-        <SafeAreaView className='mb-4'>
-            <Text className='text-2xl text-white font-bold self-center'><Text className='text-tertiary'>{initialLetter}</Text>{title}</Text>
-        </SafeAreaView>
+        <Text className='text-2xl text-white font-bold self-center'><Text className='text-tertiary'>{initialLetter}</Text>{title}</Text>
     );
 };
 
