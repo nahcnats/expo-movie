@@ -47,9 +47,10 @@ const MainNavigation = () => {
                 headerStyle:{
                         backgroundColor: 'black',
                 },
-                headerTitle: "",
-                headerLeft: () => <BackHeader />,
-                headerBackTitleVisible: false,
+                headerShown: false
+                // headerTitle: "",
+                // // headerLeft: () => <BackHeader />,
+                // headerBackTitleVisible: false,
                 }}
             >
                 <Stack.Screen

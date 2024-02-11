@@ -1,15 +1,34 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { 
+	ScrollView, 
+	View, 
+	Text, 
+	SafeAreaView, 
+	TouchableOpacity,
+	Dimensions
+} from 'react-native';
+import React, { useState } from 'react';
 import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
+import { Ionicons, Fontisto } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+
+import { IS_ANDROID } from '../utils';
 
 import { MainNavigationParams } from '../navigators/MainNavigation';
 import { useMovie } from '../hooks/useMovie';
+import colors from 'tailwindcss/colors';
+import { useRefreshOnFocus } from '../hooks/useFreshOnFocus';
 
+const { width, height } = Dimensions.get('window');
+const topMargin = IS_ANDROID ? 'mt-3' : ''
 
 type Props = NativeStackScreenProps<MainNavigationParams, 'MovieDetails'>;
 
 const MovieDetailScreen = ({ route }: Props) => {
+	const navigation = useNavigation<NativeStackNavigationProp<MainNavigationParams>>();
 	const { movieId } = route.params;
+	const [isWatchList, setIsWatchList] = useState(false);
 	const {
 		isLoading,
 		isSuccess,
@@ -18,6 +37,7 @@ const MovieDetailScreen = ({ route }: Props) => {
 		error,
 		refetch
 	} = useMovie({ movieId: movieId });
+	useRefreshOnFocus(refetch);
 
 	if (isLoading && !data) {
 		return null;
@@ -28,9 +48,75 @@ const MovieDetailScreen = ({ route }: Props) => {
 	}
 
 	return (
-		<View className='flex-1 justify-center items-center'>
-			<Text className='text-white'>{data?.title}</Text>
-		</View>
+		<ScrollView
+			className='flex-1'
+		>
+			<View className='w-full'>
+				<SafeAreaView className={`absolute z-20 w-full flex-row justify-between item-center px-4 ${topMargin}`}>
+					<TouchableOpacity
+						onPress={() => navigation.goBack()}
+					>
+						<Ionicons name="chevron-back-circle" size={34} color='#01b4e4' />	
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => setIsWatchList(v => !v)}
+					>
+						<Fontisto name='favorite' size={30} color={isWatchList ? colors.yellow[500] : colors.white} />
+					</TouchableOpacity>
+				</SafeAreaView>
+				<View>
+					<Image
+						source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${data?.poster_path}`}
+						style={{
+							width: width,
+							height: height * 0.55
+						}}
+						placeholder={data?.title}
+						contentFit="cover"
+						className='rounded-3xl mb-2 '
+					/>
+					<LinearGradient
+						colors={['transparent', 'rgba(23, 23, 23, 0.8)', 'rgba(23, 23, 23, 1)']}
+						style={{
+							width,
+							height: height * 0.40
+						}}
+						start={{ x: 0.5, y: 0 }}
+						end={{ x: 0.5, y: 1 }}
+						className='absolute bottom-0'
+					/>
+				</View>
+			</View>
+			<View style={{ marginTop: -height * 0.09}} className='space-y-3'>
+				<Text className='text-white text-center text-2xl font-bold tracking-wider'>{data?.title}</Text>
+				<Text
+					className='text-neutral-400 font-semibold text-sm text-center'
+				>
+					{`${data?.status} * ${data?.release_date} * ${data?.runtime} min`}
+				</Text>
+				<View className='flex-row justify-center mx-4 space-x-2'>
+					{
+						data?.genres.map((item) => 
+							<Text
+								key={item.id}
+								className='text-neutral-400 font-semibold text-sm text-center'
+							>
+								{item.name}
+							</Text>
+						)
+					}
+				</View>
+				<Text
+					className='text-neutral-400 mx-4 tracking-wide text-sm'
+				>
+					{data?.overview}
+				</Text>
+				{/* Show Movie Reviews
+				Post Rating
+				Delete Rating
+				Add to Watchlist */}
+			</View>
+		</ScrollView>
 	);
 };
 
