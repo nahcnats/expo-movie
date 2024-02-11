@@ -5,6 +5,7 @@ import { TrendingMovie } from "../models/TrendingMovie";
 import { Movie } from "../models/Movie";
 import { Reviews } from "../models/Reviews";
 import { RatedMovies } from "../models/RatedMovies";
+import { WatchList } from "../models/WatchList";
 
 export interface getMovieProp {
     movieId: number
@@ -16,6 +17,10 @@ export interface getMovieRatingsProp {
 
 export interface addWatchlistProp extends getMovieRatingsProp {
     media_id: number,
+}
+
+export interface searchMoviesProp {
+    query: string
 }
 
 export const getTrendingMovies = async (): Promise<TrendingMovie[]> => {
@@ -110,6 +115,20 @@ export const addWatchlist = async (payload: addWatchlistProp): Promise<boolean> 
             watchlist: true  
         },
         {
+            headers: headerOptions
+        });
+
+        return res.data;
+    } catch (err: any) {
+        throw new Error(`${apiErrorHandler(err)}`);
+    }
+}
+
+// Search Movies
+// https://api.themoviedb.org/3/search/movie
+export const searchMovies = async (payload: searchMoviesProp): Promise<WatchList> => {
+    try {
+        const res = await server.get(`/search/movie?query=${payload.query}`, {
             headers: headerOptions
         });
 
