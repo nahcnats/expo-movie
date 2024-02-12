@@ -43,16 +43,14 @@ yarn ios
 
 If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
 ## Step 3: Environment Variables (.env)
 
 Setup a .env with the following values:
 
-EXPO_PUBLIC_TMDB_BASE_URL=https://api.themoviedb.org/3
-EXPO_PUBLIC_TMDB_API_KEY={API_KEY}
-EXPO_PUBLIC_TMDB_IMAGE_PATH=https://image.tmdb.org/t/p/w500
-EXPO_PUBLIC_TMDB_TOKEN={READ_ACCESS_TOKEN}
+- EXPO_PUBLIC_TMDB_BASE_URL=https://api.themoviedb.org/3
+- EXPO_PUBLIC_TMDB_API_KEY={API_KEY}
+- EXPO_PUBLIC_TMDB_IMAGE_PATH=https://image.tmdb.org/t/p/w500
+- EXPO_PUBLIC_TMDB_TOKEN={READ_ACCESS_TOKEN}
 
 ## Step 4: App Summary
 
