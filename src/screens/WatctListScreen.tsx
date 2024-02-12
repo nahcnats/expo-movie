@@ -51,8 +51,6 @@ const WatctListScreen = () => {
     if (isError || isProfileError) {
         return <Error />;
     }
-
-    console.log('wat', data)
     
     return (
         <View className='flex-1'>
