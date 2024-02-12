@@ -6,9 +6,12 @@ import {
     BottomSheetModal,
     useBottomSheetModal,
 } from '@gorhom/bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
 import { Rating } from 'react-native-ratings';
 import colors from 'tailwindcss/colors';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+import { MainNavigationParams } from '../navigators/MainNavigation';
 import { useRefreshOnFocus } from '../hooks/useFreshOnFocus';
 import { useReviews } from '../hooks/useReviews';
 import { useAppSelector } from '../store/store';
@@ -21,11 +24,13 @@ import Loading from './Loading';
 import ModalBottomsheet from './BottomSheetModal';
 
 interface MovieDetailsFooterProps {
-    movieId: number
+    movieId: number,
+    movieTitle: string
 }
 
-const MovieDetailsFooter = ({ movieId }: MovieDetailsFooterProps) => {
+const MovieDetailsFooter = ({ movieId, movieTitle }: MovieDetailsFooterProps) => {
     const { request_token } = useAppSelector(state => state.authReducer.value);
+    const navigation = useNavigation<NativeStackNavigationProp<MainNavigationParams>>();
     const [isRated, setIsRated] = useState(false);
     const bottomSheetRef = useRef<BottomSheetModal>(null);
     const { dismiss } = useBottomSheetModal();
@@ -114,14 +119,16 @@ const MovieDetailsFooter = ({ movieId }: MovieDetailsFooterProps) => {
     if (isError || isProfileError || isRatingError) {
         return <Error />;
     }
-    
+
     return (
         <View className='flex-row justify-around items-center mt-12 mb-12 mx-4'>
             <TouchableOpacity
                 className='items-center'
+                onPress={() => navigation.navigate('ReviewListing', {movieId: movieId, movieTitle: movieTitle})}
+                disabled={data?.pages[0].total_results === 0}
             >
                 <MaterialIcons name="reviews" size={24} color='white' />
-                <Text className='text-sm text-white font-semibold'><Text className='text-tertiary'>{data?.total_results}</Text> Review{data?.total_results === 1 ? '' : 's'}</Text>
+                <Text className='text-sm text-white font-semibold'><Text className='text-tertiary'>{data?.pages[0].total_results}</Text> Review{data?.pages[0].total_results === 1 ? '' : 's'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 className='items-center'

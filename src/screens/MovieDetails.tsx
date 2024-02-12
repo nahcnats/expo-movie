@@ -22,7 +22,6 @@ import { useMovie } from '../hooks/useMovie';
 import { useRefreshOnFocus } from '../hooks/useFreshOnFocus';
 import { useProfile } from '../hooks/useProfile';
 import { useAppSelector } from '../store/store';
-import { useReviews } from '../hooks/useReviews';
 import MovieDetailsFooter from '../components/MovieDetailFooter';
 import { useAddWatchlist } from '../hooks/useAddWatchList';
 import { useWatchlist } from '../hooks/useWatchlist';
@@ -173,11 +172,7 @@ const MovieDetailScreen = ({ route }: Props) => {
 				>
 					{data?.overview}
 				</Text>
-				<MovieDetailsFooter movieId={movieId} />
-				{/* Show Movie Reviews
-				Post Rating
-				Delete Rating
-				Add to Watchlist */}
+				<MovieDetailsFooter movieId={movieId} movieTitle={data?.title || ''} />
 			</View>
 		</ScrollView>
 	);

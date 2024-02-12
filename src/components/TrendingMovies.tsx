@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Dimensions, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
@@ -42,8 +42,9 @@ const TrendingMovies = () => {
 
     const MovieCard = ({ item }: MovieCardProps) => {
         return (
-            <TouchableWithoutFeedback
-                onPress={() => navigation.navigate('MovieDetails', {movieId: item.id})}
+            <Pressable
+                onLongPress={() => navigation.navigate('MovieDetails', { movieId: item.id })}
+                // onPress={() => navigation.navigate('MovieDetails', {movieId: item.id})}
             >
                 <View className='justify-center items-center'>
                     <Image
@@ -57,7 +58,7 @@ const TrendingMovies = () => {
                     />
                     <Text className='text-white' numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
                 </View>
-            </TouchableWithoutFeedback>
+            </Pressable>
         )
     }
 

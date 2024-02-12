@@ -14,7 +14,7 @@ export type MainNavigationParams = {
     Dashboard: undefined,
     BottomTab: undefined | { screen?: string },
     MovieDetails: { movieId: number},
-    ReviewListing: undefined,
+    ReviewListing: { movieId: number, movieTitle: string },
     Search: undefined
 }
 

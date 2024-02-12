@@ -8,7 +8,7 @@ import { RatedMovies } from "../models/RatedMovies";
 import { WatchList } from "../models/WatchList";
 
 export interface getMovieProp {
-    movieId: number
+    movieId: number,
 }
 
 export interface getMovieRatingsProp {
@@ -50,9 +50,9 @@ export const getMovie = async (payload: getMovieProp): Promise<Movie> => {
 
 // Reviews (GET)
 // https://api.themoviedb.org/3/movie/{movie_id}/reviews
-export const getMovieReviews = async (payload: getMovieProp): Promise<Reviews> => {
+export const getMovieReviews = async (pageParam: number, payload: getMovieProp): Promise<Reviews> => {
     try {
-        const res = await server.get(`/movie/${payload.movieId}/reviews`, {
+        const res = await server.get(`/movie/${payload.movieId}/reviews?page=${pageParam}`, {
             headers: headerOptions
         });
 

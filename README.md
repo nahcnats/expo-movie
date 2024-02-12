@@ -1,5 +1,7 @@
 # expo-movie
-This is a new [**React Native using Expo**]
+This is a [**React Native using Expo**] project.
+
+This app utilizes [TMDB](https://www.themoviedb.org/) APIs. Hence, a TMDB account is required to login.
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
@@ -54,12 +56,9 @@ If everything is set up _correctly_, you should see your new app running in your
 
 # App Summary
 
-This app utilizes [TMDB](https://www.themoviedb.org/) APIs. Hence, a TMDB account is required to login.
+This project was created as a technical assessment for an interview. So the UI is pretty basic.
 
-This app was created as a technical assessment for an interview. The UI is rather basic and there is room
-for improvement especially when listing of potentially large data sets, should use flatlist instead of scrollview.
-
-### Implmented Libraries
+### Implmented Core Libraries
 - Redux & Redux Toolkit for global state management.
 - TanStack Query for fetching, caching, synchronizing and updating server state.
 - Nativewind (TailwindCSS) for styling.
