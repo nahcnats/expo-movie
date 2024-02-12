@@ -54,19 +54,17 @@ If everything is set up _correctly_, you should see your new app running in your
 
 # App Summary
 
-### Libraries used
+This app utilizes [TMDB](https://www.themoviedb.org/) APIs. Hence, a TMDB account is required to login.
+
+This app was created as a technical assessment for an interview. The UI is rather basic and there is room
+for improvement especially when listing of potentially large data sets, should use flatlist instead of scrollview.
+
+### Implmented Libraries
 - Redux & Redux Toolkit for global state management.
 - TanStack Query for fetching, caching, synchronizing and updating server state.
 - Nativewind (TailwindCSS) for styling.
-- React Hook Forms and Zod for forms and validation.
+- React Hook Forms and Zod for forms handling and validation.
 - React Navigation for app navigation.
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
 # Learn More
 

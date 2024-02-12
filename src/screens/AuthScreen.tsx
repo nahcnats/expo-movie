@@ -1,4 +1,4 @@
-import { View, Text, Pressable, KeyboardAvoidingView } from 'react-native';
+import { View, Text, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -142,13 +142,13 @@ const AuthScreen = () => {
                         )
                     }}
                 />
-                <Pressable
+                <TouchableOpacity
                     className='bg-tertiary self-center p-4 w-32 mt-16 rounded-lg'
                     onPress={methods.handleSubmit(onSubmit)}
                     disabled={isLoading}
                 >
-                    <Text className='text-sm text-black font-semibold self-center'>Sign In</Text>
-                </Pressable>
+                    <Text className='text-sm text-primary font-semibold self-center'>{isLoading ? 'Wait...' : 'Sign In'}</Text>
+                </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
     );

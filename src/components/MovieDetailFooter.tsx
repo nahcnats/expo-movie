@@ -7,6 +7,7 @@ import {
     useBottomSheetModal,
 } from '@gorhom/bottom-sheet';
 import { Rating } from 'react-native-ratings';
+import colors from 'tailwindcss/colors';
 
 import { useRefreshOnFocus } from '../hooks/useFreshOnFocus';
 import { useReviews } from '../hooks/useReviews';
@@ -14,7 +15,7 @@ import { useAppSelector } from '../store/store';
 import { useProfile } from '../hooks/useProfile';
 import { useRatings } from '../hooks/useRatings';
 import { useRemoveRating } from '../hooks/useRemoveRating';
-import colors from 'tailwindcss/colors';
+
 import Error from './Error';
 import Loading from './Loading';
 import ModalBottomsheet from './BottomSheetModal';
