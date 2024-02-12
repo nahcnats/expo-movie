@@ -1,7 +1,12 @@
 import { View, Text, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
+import {
+    BottomSheetModal,
+    useBottomSheetModal,
+} from '@gorhom/bottom-sheet';
+import { Rating } from 'react-native-ratings';
 
 import { useRefreshOnFocus } from '../hooks/useFreshOnFocus';
 import { useReviews } from '../hooks/useReviews';
@@ -12,6 +17,7 @@ import { useRemoveRating } from '../hooks/useRemoveRating';
 import colors from 'tailwindcss/colors';
 import Error from './Error';
 import Loading from './Loading';
+import ModalBottomsheet from './BottomSheetModal';
 
 interface MovieDetailsFooterProps {
     movieId: number
@@ -20,6 +26,10 @@ interface MovieDetailsFooterProps {
 const MovieDetailsFooter = ({ movieId }: MovieDetailsFooterProps) => {
     const { request_token } = useAppSelector(state => state.authReducer.value);
     const [isRated, setIsRated] = useState(false);
+    const bottomSheetRef = useRef<BottomSheetModal>(null);
+    const { dismiss } = useBottomSheetModal();
+    const [showDetail, setShowDetail] = useState(false);
+    const snapPoints = useMemo(() => ['25%'], []);
 
     const {
     	isLoading: isProfileLoading,
@@ -80,6 +90,22 @@ const MovieDetailsFooter = ({ movieId }: MovieDetailsFooterProps) => {
         }
     }
 
+    const closeBottomSheet = useCallback(() => {
+        setShowDetail(false);
+
+        dismiss()
+    }, [showDetail]);
+
+    const handleBottomSheetChanges = useCallback(() => {
+        setShowDetail(v => !v);
+
+        if (showDetail) {
+            dismiss()
+        } else {
+            bottomSheetRef.current?.present();
+        }
+    }, [showDetail]);
+
     if ((isLoading || isProfileLoading || isRatingLoading) && (!data || !profile || !ratings)) {
         return <Loading />;
     }
@@ -101,19 +127,21 @@ const MovieDetailsFooter = ({ movieId }: MovieDetailsFooterProps) => {
                 onPress={() => {
                     if (isRated) {
                         removeMovieRating();
+                    } else {
+                        handleBottomSheetChanges();
                     }
                 }}
             >
                 <AntDesign name='star' size={24} color={isRated ? colors.yellow[500] : 'white'} />
                 <Text className={`text-sm ${isRated ? 'text-yellow-500' : 'text-white'} font-semibold`}>{!isRated ? 'Rate' : 'Unrate'}</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-                className='items-center'
-                onPress={removeMovieRating}
+            <ModalBottomsheet
+                ref={bottomSheetRef}
+                onClose={closeBottomSheet}
+                customSnapPoints={snapPoints}
             >
-                <AntDesign name='star' size={24} color={!isRated ? colors.gray[400] : 'white'} />
-                <Text className={`text-sm ${!isRated ? 'text-gray-400' : 'text-white'} font-semibold`}>Unrated</Text>
-            </TouchableOpacity> */}
+                <View><Text>Rate Here</Text></View>
+            </ModalBottomsheet>
         </View>
     );
 };
