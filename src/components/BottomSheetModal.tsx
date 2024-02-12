@@ -36,10 +36,10 @@ const ModalBottomsheet = forwardRef<Ref, Props>(({ title, children, onClose, cus
             enablePanDownToClose={true}
             backdropComponent={renderBackdrop}
             backgroundStyle={{
-                backgroundColor: colors.slate[100]
+                backgroundColor: colors.neutral[700]
             }}
             handleIndicatorStyle={{
-                backgroundColor: colors.green[800]
+                backgroundColor: '#01b4e4'
             }}
             onDismiss={onClose}
         >

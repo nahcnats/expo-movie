@@ -6,6 +6,7 @@ import { Movie } from "../models/Movie";
 import { Reviews } from "../models/Reviews";
 import { RatedMovies } from "../models/RatedMovies";
 import { WatchList } from "../models/WatchList";
+import { extend } from "lodash";
 
 export interface getMovieProp {
     movieId: number,
@@ -22,6 +23,10 @@ export interface addWatchlistProp extends getMovieRatingsProp {
 export interface searchMoviesProp {
     query: string,
     page: number
+}
+
+export interface addMovieRatingProp extends getMovieProp {
+    value: number
 }
 
 export const getTrendingMovies = async (): Promise<TrendingMovie[]> => {
@@ -65,9 +70,9 @@ export const getMovieReviews = async (pageParam: number, payload: getMovieProp):
 
 // Add Rating (POST)
 // https://api.themoviedb.org/3/movie/{movie_id}/rating
-export const addMovieRating = async (payload: getMovieProp): Promise<boolean> => {
+export const addMovieRating = async (payload: addMovieRatingProp): Promise<boolean> => {
     try {
-        const res = await server.post(`/movie/${payload.movieId}rating`, {
+        const res = await server.post(`/movie/${payload.movieId}/rating`, {value: payload.value}, {
             headers: headerOptions
         });
 

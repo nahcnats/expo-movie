@@ -65,6 +65,9 @@ This project was created as a technical assessment for an interview. So the UI i
 - React Hook Forms and Zod for forms handling and validation.
 - React Navigation for app navigation.
 
+### Challenges
+- Some of the APIs don't behave as anticipated.
+
 # Learn More
 
 To learn more about React Native, take a look at the following resources:

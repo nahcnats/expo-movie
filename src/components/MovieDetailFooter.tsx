@@ -7,7 +7,7 @@ import {
     useBottomSheetModal,
 } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
-import { Rating } from 'react-native-ratings';
+import StarRating from 'react-native-star-rating-widget';
 import colors from 'tailwindcss/colors';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -22,6 +22,7 @@ import { useRemoveRating } from '../hooks/useRemoveRating';
 import Error from './Error';
 import Loading from './Loading';
 import ModalBottomsheet from './BottomSheetModal';
+import { useAddRating } from '../hooks/useAddRating';
 
 interface MovieDetailsFooterProps {
     movieId: number,
@@ -32,6 +33,7 @@ const MovieDetailsFooter = ({ movieId, movieTitle }: MovieDetailsFooterProps) =>
     const { request_token } = useAppSelector(state => state.authReducer.value);
     const navigation = useNavigation<NativeStackNavigationProp<MainNavigationParams>>();
     const [isRated, setIsRated] = useState(false);
+    const [rating, setRating] = useState(0);
     const bottomSheetRef = useRef<BottomSheetModal>(null);
     const { dismiss } = useBottomSheetModal();
     const [showDetail, setShowDetail] = useState(false);
@@ -69,10 +71,11 @@ const MovieDetailsFooter = ({ movieId, movieTitle }: MovieDetailsFooterProps) =>
     useRefreshOnFocus(ratingRefetch);
 
     const { mutateAsync: deleteRating } = useRemoveRating();
+    const { mutateAsync: addRating } = useAddRating();
 
     useEffect(() => {
-        // TODO: Not the best way to filter data. API should handle this
-        const ratedMovie = ratings?.results.filter(item => item.id === movieId);
+        // // TODO: Not the best way to filter data. API should handle this
+        const ratedMovie = ratings?.results.filter(item => item.id=== movieId);
 
         if (ratedMovie?.length) {
             setIsRated(true)
@@ -86,6 +89,24 @@ const MovieDetailsFooter = ({ movieId, movieTitle }: MovieDetailsFooterProps) =>
             });
 
             setIsRated(false);
+        } catch (err: any) {
+            Toast.show({
+                type: ALERT_TYPE.DANGER,
+                title: 'Error',
+                textBody: err.message,
+                autoClose: 2000,
+            });
+        }
+    }
+
+    const addMovieRating = async () => {
+        try {
+            await addRating({
+                movieId,
+                value: rating * 2
+            });
+
+            setIsRated(true);
         } catch (err: any) {
             Toast.show({
                 type: ALERT_TYPE.DANGER,
@@ -148,7 +169,25 @@ const MovieDetailsFooter = ({ movieId, movieTitle }: MovieDetailsFooterProps) =>
                 onClose={closeBottomSheet}
                 customSnapPoints={snapPoints}
             >
-                <View><Text>Rate Here</Text></View>
+                <View className='w-full justify-center items-center mt-4 space-y-8'>
+                    <StarRating
+                        rating={rating}
+                        onChange={setRating}
+                        maxStars={5}
+                        enableHalfStar
+                        enableSwiping
+                    />
+                    <TouchableOpacity
+                        className='bg-tertiary self-center p-4 w-32 rounded-lg'
+                        onPress={() => {
+                            addMovieRating();
+                            handleBottomSheetChanges();
+                        }}
+                    >
+                        <Text className='text-sm text-primary font-semibold self-center'>OK</Text>
+                    </TouchableOpacity>
+                </View>
+                
             </ModalBottomsheet>
         </View>
     );
