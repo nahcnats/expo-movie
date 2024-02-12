@@ -54,6 +54,13 @@ Setup a .env with the following values:
 
 ## Step 4: App Summary
 
+### Libraries used
+- Redux & Redux Toolkit for global state management.
+- TanStack Query for fetching, caching, synchronizing and updating server state.
+- Nativewind (TailwindCSS) for styling.
+- React Hook Forms and Zod for forms and validation.
+- React Navigation for app navigation.
+
 Now that you have successfully run the app, let's modify it.
 
 1. Open `App.tsx` in your text editor of choice and edit some lines.
