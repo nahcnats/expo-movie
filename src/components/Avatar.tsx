@@ -18,6 +18,7 @@ const smallSize = {
 }
 
 const Avatar = ({ uriPath, size }: AvartarProps) => {
+    console.log(uriPath)
     const NoImage = () => {
         return (
             <View className='flex-1 justify-center items-center'>

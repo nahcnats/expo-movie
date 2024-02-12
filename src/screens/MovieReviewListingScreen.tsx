@@ -49,20 +49,15 @@ const MovieReviewListingScreen = ({ route }: Props) => {
     }
 
     const ReviewItem = ({ itemData }: ReviewItemsProps) => {
+        const avatarPath = itemData.author_details.avatar_path !== null ? `${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${itemData.author_details.avatar_path}` : '';
+
         return (
             <View className='flex-row justify-between space-x-4'>
                 <View className='justify-start items-center'>
-                    {
-                        itemData.author_details.avatar_path !== null || itemData.author_details.avatar_path !== ''
-                            ? <Avatar
-                                uriPath={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${itemData.author_details.avatar_path}`}
-                                size='small'
-                            />
-                            : <Avatar
-                                uriPath=''
-                                size='small'
-                            />
-                    }
+                    <Avatar
+                        uriPath={avatarPath}
+                        size='small'
+                    />
                 </View>
                 <View className='flex-1 space-y-2'>
                     <Text className='text-white text-lg font-bold'>{itemData.author_details.name}</Text>
@@ -96,7 +91,7 @@ const MovieReviewListingScreen = ({ route }: Props) => {
             </SafeAreaView>
             <View className='flex-1 mb-24'>
                 <View className='w-full mb-4'>
-                    <Text className='text-2xl text-white font-bold self-center' numberOfLines={1} ellipsizeMode='tail'>{movieTitle}</Text>
+                    <Text className='text-2xl text-tertiary font-bold self-center' numberOfLines={1} ellipsizeMode='tail'>{movieTitle}</Text>
                 </View>
                 <FlashList
                     data={data?.pages.map(page => page.results).flat()}
