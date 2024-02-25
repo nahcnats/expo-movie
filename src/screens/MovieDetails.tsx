@@ -14,8 +14,9 @@ import { Ionicons, Fontisto } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from 'tailwindcss/colors';
 import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
+import Animated, { withSpring } from 'react-native-reanimated';
 
-import { IS_ANDROID } from '../utils';
+import { IS_ANDROID, customTransition } from '../utils';
 
 import { MainNavigationParams } from '../navigators/MainNavigation';
 import { useMovie } from '../hooks/useMovie';
@@ -126,18 +127,21 @@ const MovieDetailScreen = ({ route }: Props) => {
 					</TouchableOpacity>
 				</SafeAreaView>
 				<View>
-					<Image
-						source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${data?.poster_path}`}
+					<Animated.Image
+						// source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${data?.poster_path}`}
+						source={{ uri: `${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${data?.poster_path}`}}
 						style={{
 							width: width,
 							height: height * 0.55
 						}}
-						placeholder={data?.title}
-						contentFit="cover"
+						// contentFit="cover"
+						resizeMode='cover'
 						className='rounded-3xl mb-2 '
+						sharedTransitionTag="tag" 
+						sharedTransitionStyle={customTransition} 
 					/>
 					<LinearGradient
-						colors={['transparent', 'rgba(23, 23, 23, 0.8)', 'rgba(23, 23, 23, 1)']}
+						colors={['transparent', 'rgba(20, 20, 20, .3)', 'rgba(20, 20, 20, 1)']}
 						style={{
 							width,
 							height: height * 0.40

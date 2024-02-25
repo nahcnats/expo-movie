@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { Image } from 'expo-image';
+import Animated from 'react-native-reanimated';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import { IS_ANDROID } from '../utils';
+import { IS_ANDROID, customTransition } from '../utils';
 
 import { useTrendingMovies } from '../hooks/useTrendingMovies';
 import { TrendingMovie } from '../models/TrendingMovie';
@@ -41,20 +42,27 @@ const TrendingMovies = () => {
     } = useTrendingMovies();
 
     const MovieCard = ({ item }: MovieCardProps) => {
+        const imageUri = `${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item.poster_path}`;
+
         return (
             <Pressable
                 onLongPress={() => navigation.navigate('MovieDetails', { movieId: item.id })}
                 // onPress={() => navigation.navigate('MovieDetails', {movieId: item.id})}
             >
                 <View className='justify-center items-center'>
-                    <Image
-                        source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item.poster_path}`}
+                    <Animated.Image
+                        // source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item.poster_path}`}
+                        source={{ uri: imageUri}}
                         style={{
                             width: width - 40,
-                            height: height / 1.8                       }}
-                        placeholder={item.title}
-                        contentFit="cover"
+                            height: height / 1.8                       
+                        }}
+                        // placeholder={item.title}
+                        // contentFit="cover"
+                        resizeMode='cover'
                         className='rounded-3xl mb-2 '
+                        sharedTransitionTag="tag"
+                        sharedTransitionStyle={customTransition} 
                     />
                     <Text className='text-white' numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
                 </View>
