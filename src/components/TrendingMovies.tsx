@@ -57,12 +57,11 @@ const TrendingMovies = () => {
                             width: width - 40,
                             height: height / 1.8                       
                         }}
-                        // placeholder={item.title}
                         // contentFit="cover"
                         resizeMode='cover'
                         className='rounded-3xl mb-2 '
-                        sharedTransitionTag="tag"
                         sharedTransitionStyle={customTransition} 
+                        sharedTransitionTag={`${item.id}`}
                     />
                     <Text className='text-white' numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
                 </View>

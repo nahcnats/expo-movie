@@ -36,14 +36,15 @@ const springConfig = {
 }
 
 export const customTransition = SharedTransition.custom((values) => {
-    console.log('target', values)
     'worklet';
     
     return {
-        // height: withSpring(values.targetHeight, springConfig),
-        // width: withSpring(values.targetWidth, springConfig),
         height: withSpring(values.targetHeight),
         width: withSpring(values.targetWidth),
+        originX: withSpring(values.targetOriginX),
+        originY: withSpring(values.targetOriginY),
+        // height: withSpring(values.targetHeight, springConfig),
+        // width: withSpring(values.targetWidth, springConfig),
         // originX: withSpring(values.targetOriginX, springConfig),
         // originY: withSpring(values.targetOriginY, springConfig),
     };
