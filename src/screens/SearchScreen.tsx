@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Image } from 'expo-image';
 import { debounce } from 'lodash';
+import Animated from 'react-native-reanimated';
 
 import { MainNavigationParams } from '../navigators/MainNavigation';
 import { searchMovies, searchMoviesProp  } from '../services/movies-services';
@@ -22,6 +23,7 @@ import { WatchList } from '../models/WatchList';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
+import { customTransition } from '../utils';
 
 const { width, height } = Dimensions.get('window');
 
@@ -93,13 +95,16 @@ const SearchScreen = () => {
                                         onPress={() => navigation.push('MovieDetails', { movieId: item.id })}
                                     >
                                         <View className='space-y-2 mb-4'>
-                                            <Image
+                                            <Animated.Image
                                                 className='rounded-3xl'
-                                                source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item?.poster_path}`}
+                                                // source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item?.poster_path}`}
+                                                source={{uri: `${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item?.poster_path}`}}
                                                 style={{
                                                     width: width * 0.44,
                                                     height: height * 0.3
                                                 }}
+                                                sharedTransitionStyle={customTransition}
+                                                sharedTransitionTag={`${item.id}`}
                                             />
                                             <Text className='text-xs text-neutral-400'>
                                                 {item.title.length > 22 ? item.title.slice(0, 22) + '...' : item.title}

@@ -14,7 +14,7 @@ import { Ionicons, Fontisto } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from 'tailwindcss/colors';
 import { ALERT_TYPE, Toast } from 'react-native-alert-notification';
-import Animated, { FadeIn, FadeInDown, FadeInRight, FadeOut, FadeOutDown, FadeOutUp, withSpring } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInDown, FadeInRight, FadeInUp, FadeOut, FadeOutDown, FadeOutUp, withSpring } from 'react-native-reanimated';
 
 import { IS_ANDROID, customTransition } from '../utils';
 
@@ -141,7 +141,7 @@ const MovieDetailScreen = ({ route }: Props) => {
 						sharedTransitionTag={`${movieId}`}
 						// entering={FadeIn.delay(600)}
 						entering={
-							FadeInDown.delay(600)
+							FadeInUp.delay(600)
 						}
 					/>
 					<LinearGradient
