@@ -47,15 +47,16 @@ const SearchScreen = () => {
                 if (res.results) {
                     setResults(res.results);
                 }
+
+                setIsLoading(false);
             } catch (err: any) {
+                setIsLoading(false);
                 Toast.show({
                     type: ALERT_TYPE.DANGER,
                     title: 'Error',
                     textBody: err.message,
                     autoClose: 2000,
                 });
-            } finally {
-                setIsLoading(false);
             }
         }
     }
@@ -92,10 +93,10 @@ const SearchScreen = () => {
                                 return (
                                     <Pressable
                                         key={item.id}
-                                        onPress={() => navigation.push('MovieDetails', { movieId: item.id })}
+                                        onPress={() => navigation.navigate('MovieDetails', { movieId: item.id })}
                                     >
                                         <View className='space-y-2 mb-4'>
-                                            <Animated.Image
+                                            <Image
                                                 className='rounded-3xl'
                                                 // source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item?.poster_path}`}
                                                 source={{uri: `${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item?.poster_path}`}}
@@ -103,8 +104,8 @@ const SearchScreen = () => {
                                                     width: width * 0.44,
                                                     height: height * 0.3
                                                 }}
-                                                sharedTransitionStyle={customTransition}
-                                                sharedTransitionTag={`${item.id}`}
+                                                // sharedTransitionStyle={customTransition}
+                                                // sharedTransitionTag={`${item.id}`}
                                             />
                                             <Text className='text-xs text-neutral-400'>
                                                 {item.title.length > 22 ? item.title.slice(0, 22) + '...' : item.title}
