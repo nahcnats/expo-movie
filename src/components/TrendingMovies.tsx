@@ -51,20 +51,20 @@ const TrendingMovies = () => {
             <Pressable
                 onPress={() => navigation.navigate('MovieDetails', { movieId: item.id })}
             >
-                    <Animated.Image
-                        // source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item.poster_path}`}
-                        source={{ uri: imageUri }}
-                        style={{
-                            width: width - 5,
-                            height: height / 1.8
-                        }}
-                        // contentFit="cover"
-                        resizeMode='cover'
-                        className='rounded-2xl mb-4'
-                        sharedTransitionStyle={customTransition}
-                        sharedTransitionTag={`${item.id}`}
-                    />
-                <Text className='text-white text-lg self-center' numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
+                <Animated.Image
+                    // source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item.poster_path}`}
+                    source={{ uri: imageUri }}
+                    style={{
+                        width: width - 5,
+                        height: height / 1.6
+                    }}
+                    // contentFit="cover"
+                    resizeMode='cover'
+                    className='rounded-2xl mb-4'
+                    sharedTransitionStyle={customTransition}
+                    sharedTransitionTag={`${item.id}`}
+                />
+                <Text className='text-white opacity-60 text-lg self-center' numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
             </Pressable>
         )
     }
@@ -79,7 +79,7 @@ const TrendingMovies = () => {
 
     return (
         <View className='mb-8 mx-2'>
-            <Text className='text-lg text-white font-semibold mb-5'>Trending</Text>
+            <Text className='text-xl text-white font-semibold'>Trending</Text>
             <Carousel
                 {...baseOptions}
                 style={{
@@ -101,14 +101,6 @@ const TrendingMovies = () => {
                 data={data || []}
                 renderItem={({ item }) => <MovieCard item={item} />}
             />
-            {/* <PaginationItem
-                backgroundColor={backgroundColor}
-                animValue={progressValue}
-                index={index}
-                key={index}
-                isRotate={isVertical}
-                length={colors.length}
-            /> */}
         </View>
     );
 };
