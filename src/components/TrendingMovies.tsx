@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { Image } from 'expo-image';
-import Animated from 'react-native-reanimated';
+import Animated, { useSharedValue } from 'react-native-reanimated';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { IS_ANDROID, customTransition } from '../utils';
@@ -20,17 +20,20 @@ interface MovieCardProps {
 }
 
 const { width, height } = Dimensions.get('window');
+const PAGE_WIDTH = width;
 
 const baseOptions = {
     vertical: false,
-    width: width - 10,   
+    width: PAGE_WIDTH,
     height: height
 } as const;
 
 const TrendingMovies = () => {
     const navigation = useNavigation<NativeStackNavigationProp<MainNavigationParams>>();
-    const [currentIdx, setCurrentIdx] = useState(0);
-    const ref = React.useRef<ICarouselInstance>(null);
+    const [autoPlay, setAutoPlay] = useState(false);
+    // const [pagingEnabled, setPagingEnabled] = React.useState<boolean>(true);
+    // const [snapEnabled, setSnapEnabled] = React.useState<boolean>(true);
+    const progressValue = useSharedValue<number>(0);
     
     const {
         isLoading,
@@ -46,25 +49,22 @@ const TrendingMovies = () => {
 
         return (
             <Pressable
-                onLongPress={() => navigation.navigate('MovieDetails', { movieId: item.id })}
-                // onPress={() => navigation.navigate('MovieDetails', {movieId: item.id})}
+                onPress={() => navigation.navigate('MovieDetails', { movieId: item.id })}
             >
-                <View className='justify-center items-center'>
                     <Animated.Image
                         // source={`${process.env.EXPO_PUBLIC_TMDB_IMAGE_PATH}/${item.poster_path}`}
-                        source={{ uri: imageUri}}
+                        source={{ uri: imageUri }}
                         style={{
-                            width: width - 40,
-                            height: height / 1.8                       
+                            width: width - 5,
+                            height: height / 1.8
                         }}
                         // contentFit="cover"
                         resizeMode='cover'
-                        className='rounded-3xl mb-2 '
-                        sharedTransitionStyle={customTransition} 
+                        className='rounded-2xl mb-4'
+                        sharedTransitionStyle={customTransition}
                         sharedTransitionTag={`${item.id}`}
                     />
-                    <Text className='text-white' numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
-                </View>
+                <Text className='text-white text-lg self-center' numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
             </Pressable>
         )
     }
@@ -82,14 +82,33 @@ const TrendingMovies = () => {
             <Text className='text-lg text-white font-semibold mb-5'>Trending</Text>
             <Carousel
                 {...baseOptions}
-                ref={ref}
-                loop={false}
-                autoPlay={false}
+                style={{
+                    width: PAGE_WIDTH,
+                }}
+                loop
+                // pagingEnabled={pagingEnabled}
+                // snapEnabled={snapEnabled}
+                autoPlay={autoPlay}
+                autoPlayInterval={1500}
+                onProgressChange={(_, absoluteProgress) =>
+                    (progressValue.value = absoluteProgress)
+                }
+                mode="parallax"
+                modeConfig={{
+                    parallaxScrollingScale: 0.9,
+                    parallaxScrollingOffset: 50,
+                }}
                 data={data || []}
-                scrollAnimationDuration={1000}
-                // onSnapToItem={(index: number) => setCurrentIdx(index)}
-                renderItem={({item}) => <MovieCard item={item} />}
+                renderItem={({ item }) => <MovieCard item={item} />}
             />
+            {/* <PaginationItem
+                backgroundColor={backgroundColor}
+                animValue={progressValue}
+                index={index}
+                key={index}
+                isRotate={isVertical}
+                length={colors.length}
+            /> */}
         </View>
     );
 };
