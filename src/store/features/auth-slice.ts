@@ -29,7 +29,7 @@ export const auth = createSlice({
     initialState: initialState,
     reducers: {
         logOut: () => {
-            deleteCredentials('CREDENTIALS');
+            // deleteCredentials('CREDENTIALS');
             return initialState;
         },
         logIn: (state, action: PayloadAction<AuthState>) => {

@@ -6,7 +6,7 @@ import { Movie } from "../models/Movie";
 import { Reviews } from "../models/Reviews";
 import { RatedMovies } from "../models/RatedMovies";
 import { WatchList } from "../models/WatchList";
-import { extend } from "lodash";
+import { store } from "../store/store";
 
 export interface getMovieProp {
     movieId: number,
@@ -30,6 +30,9 @@ export interface addMovieRatingProp extends getMovieProp {
 }
 
 export const getTrendingMovies = async (): Promise<TrendingMovie[]> => {
+    // const state = store.getState();
+
+    // console.log('store', state.authReducer.value.request_token)
     try {
         const res = await server.get(`/trending/movie/day?language=en-US`, {
             headers: headerOptions

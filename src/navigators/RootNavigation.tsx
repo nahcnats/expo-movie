@@ -25,14 +25,15 @@ const RootNavigation = () => {
     const currentAppState = useAppState();
     const dispatch = useDispatch();
     const isAuth = useAppSelector((state) => !!state.authReducer.value.request_token);
+    const credentials = useAppSelector((state) => state.authReducer.value);
 
     const trySignIn = useCallback(async () => {
         try {
-            const authStore = await AsyncStorage.getItem("CREDENTIALS");
+            // const authStore = await AsyncStorage.getItem("CREDENTIALS");
 
-            if (!authStore) return;
+            // if (!authStore) return;
 
-            const credentials = JSON.parse(authStore);
+            // const credentials = JSON.parse(authStore);
 
             dispatch(logIn(credentials));
         } catch (err: any) {
