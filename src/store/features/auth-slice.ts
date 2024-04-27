@@ -3,9 +3,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type AuthState = {
-    username: string,
-    password: string,
-    request_token: string
+    username: null | string,
+    password: null | string,
+    request_token: null | string
 }
 
 type InitialState = {
@@ -14,9 +14,9 @@ type InitialState = {
 
 const initialState = {
     value: {
-        username: "",
-        password: "",
-        request_token: ""
+        username: null,
+        password: null,
+        request_token: null
     }
 } as InitialState;
 
