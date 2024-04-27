@@ -6,7 +6,8 @@ import { Movie } from "../models/Movie";
 import { Reviews } from "../models/Reviews";
 import { RatedMovies } from "../models/RatedMovies";
 import { WatchList } from "../models/WatchList";
-import { store } from "../store/store";
+// import { store } from "../store/store";
+// import { logIn } from "../store/features/auth-slice";
 
 export interface getMovieProp {
     movieId: number,
@@ -30,9 +31,14 @@ export interface addMovieRatingProp extends getMovieProp {
 }
 
 export const getTrendingMovies = async (): Promise<TrendingMovie[]> => {
-    // const state = store.getState();
+    // const accessToken = store.getState().authReducer.value.request_token;
+    // const setAccessToken = store.dispatch(logIn({
+    //     username: '',
+    //     password: '',
+    //     request_token: ''
+    // }))
 
-    // console.log('store', state.authReducer.value.request_token)
+    // console.log('store', accessToken)
     try {
         const res = await server.get(`/trending/movie/day?language=en-US`, {
             headers: headerOptions
